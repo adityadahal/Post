@@ -6,11 +6,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface PostService {
     Post createPost(PostDto postDto);
     List <Post> getAllPost();
 
-
+    Post updatePost(int id, PostDto postDto);
 
 }

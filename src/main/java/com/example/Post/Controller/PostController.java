@@ -5,7 +5,6 @@ import com.example.Post.Dto.PostDto;
 import com.example.Post.Model.Post;
 import com.example.Post.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +26,13 @@ public class PostController {
         return  postService.getAllPost();
     }
 
-    @PutMapping("getByid/{id}")
+    @PutMapping("/getByid/{id}")
     public ResponseEntity<?> updatePost(@PathVariable int id, @RequestBody PostDto postDto){
         return  ResponseEntity.ok(postService.updatePost(id, postDto));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deletePost(@PathVariable int id){
+        return  postService.deletePost(id);
     }
 }

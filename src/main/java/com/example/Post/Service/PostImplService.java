@@ -19,7 +19,6 @@ public class PostImplService implements  PostService{
     @Override
     public Post createPost(PostDto postDto) {
         Post post = new Post();
-        post.setId(postDto.getId());
         post.setTitle(postDto.getTitle());
         post.setDescription(postDto.getDescription());
         return postRepository.save(post);
@@ -33,9 +32,15 @@ public class PostImplService implements  PostService{
     @Override
     public Post updatePost(int id, PostDto postDto) {
         Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Id not found"+ id));
-        post.setId(postDto.getId());
         post.setTitle(postDto.getTitle());
         post.setDescription(postDto.getDescription());
         return postRepository.save(post);
+    }
+
+    @Override
+    public String deletePost(int id) {
+        postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found"));
+     postRepository.deleteById(id);
+     return  "Successfully deleted";
     }
 }

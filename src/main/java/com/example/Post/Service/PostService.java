@@ -12,4 +12,6 @@ public interface PostService {
 
     Post updatePost(int id, PostDto postDto);
 
+    String deletePost(int id);
+
 }

@@ -39,8 +39,8 @@ public class PostImplService implements  PostService{
 
     @Override
     public String deletePost(int id) {
-        postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found"));
-     postRepository.deleteById(id);
-     return  "Successfully deleted";
+      postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found"));
+      postRepository.deleteById(id);
+     return  "Successfully deleted " + id;
     }
 }

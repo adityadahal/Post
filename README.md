@@ -12,8 +12,8 @@ As well as User can Also Comment on the specific post which can be retrived thro
 ![image](https://github.com/adityadahal/Post/assets/107999400/2e2af537-cd09-4667-908f-9d03d0c3f4eb)
 
 ### Result
-![image](https://github.com/adityada
-### Resulthal/Post/assets/107999400/1d7efa0a-9e0b-4a2c-a0c4-cbcc21ab2ccf)
+![image](https://github.com/adityadahal/Post/assets/107999400/1d7efa0a-9e0b-4a2c-a0c4-cbcc21ab2ccf)
+
 
 ### Delete Post also deletes comment associates to it !
 ![image](https://github.com/adityadahal/Post/assets/107999400/8e7c4513-946b-4b70-95b7-ec08d09a9652)

@@ -6,6 +6,7 @@ import com.example.Post.Model.Comment;
 import com.example.Post.Model.Post;
 import com.example.Post.Repository.CommentRepository;
 import com.example.Post.Repository.PostRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,7 @@ public class PostImplService implements PostService {
             List<Comment> comments = commentRepository.findAllByPostId(post.getId());
             PostDto postDto = new PostDto();
             postDto.setDescription(post.getDescription());
+            postDto.setId(post.getId());
             postDto.setTitle(post.getTitle());
             postDto.setComments(comments);
             postDtoList.add(postDto);
@@ -53,8 +55,12 @@ public class PostImplService implements PostService {
     }
 
     @Override
-    public String deletePost(int id) {
-        postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found"));
+    @Transactional
+    public  String  deletePost(int id) {
+        List<Comment> commentList = commentRepository.findAllByPostId(id);
+        for (Comment comment : commentList){
+           commentRepository.deleteById(comment.getId());
+        }
         postRepository.deleteById(id);
         return "Successfully deleted " + id;
     }

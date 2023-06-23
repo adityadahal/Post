@@ -15,7 +15,7 @@ public class Comment {
     @Id
     private int id;
     private String comment;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "post_id" )
     @JsonIgnore
     private Post post;

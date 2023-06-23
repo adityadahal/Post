@@ -38,4 +38,10 @@ public class CommentImplService implements CommentService {
     public List<Comment> getComment() {
         return commentRepository.findAll();
     }
+
+    @Override
+    public String deleteComment(int id) {
+       commentRepository.deleteById(id);
+       return "Successfully Deleted Comment";
+    }
 }

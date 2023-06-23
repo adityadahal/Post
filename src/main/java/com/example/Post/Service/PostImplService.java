@@ -2,19 +2,23 @@ package com.example.Post.Service;
 
 import com.example.Post.Dto.PostDto;
 import com.example.Post.Exception.ResourceNotFoundException;
+import com.example.Post.Model.Comment;
 import com.example.Post.Model.Post;
+import com.example.Post.Repository.CommentRepository;
 import com.example.Post.Repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 @Service
-public class PostImplService implements  PostService{
+public class PostImplService implements PostService {
 
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    CommentRepository commentRepository;
 
     @Override
     public Post createPost(PostDto postDto) {
@@ -25,13 +29,24 @@ public class PostImplService implements  PostService{
     }
 
     @Override
-    public List<Post> getAllPost() {
-        return postRepository.findAll();
+    public List<PostDto> getAllPost() {
+        List<Post> postList = postRepository.findAll();
+        List<PostDto> postDtoList = new ArrayList<>();
+
+        for (Post post : postList) {
+            List<Comment> comments = commentRepository.findAllByPostId(post.getId());
+            PostDto postDto = new PostDto();
+            postDto.setDescription(post.getDescription());
+            postDto.setTitle(post.getTitle());
+            postDto.setComments(comments);
+            postDtoList.add(postDto);
+        }
+        return postDtoList;
     }
 
     @Override
     public Post updatePost(int id, PostDto postDto) {
-        Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Id not found"+ id));
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found" + id));
         post.setTitle(postDto.getTitle());
         post.setDescription(postDto.getDescription());
         return postRepository.save(post);
@@ -39,8 +54,8 @@ public class PostImplService implements  PostService{
 
     @Override
     public String deletePost(int id) {
-      postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found"));
-      postRepository.deleteById(id);
-     return  "Successfully deleted " + id;
+        postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found"));
+        postRepository.deleteById(id);
+        return "Successfully deleted " + id;
     }
 }

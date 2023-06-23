@@ -10,4 +10,6 @@ public interface CommentService {
    BaseResponse saveComment(CommentDto commentDto);
    List<Comment> getComment();
 
+   String deleteComment(int id);
+
 }

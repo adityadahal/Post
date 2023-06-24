@@ -17,6 +17,7 @@ public class Like {
     private  boolean isLiked;
 
     @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "post_id")
     @JsonIgnore
     private Post post;
 

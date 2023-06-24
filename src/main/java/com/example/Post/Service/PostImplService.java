@@ -46,6 +46,7 @@ public class PostImplService implements PostService {
             postDto.setId(post.getId());
             postDto.setTitle(post.getTitle());
             postDto.setComments(comments);
+            postDto.setLike(like);
             postDtoList.add(postDto);
         }
         return postDtoList;

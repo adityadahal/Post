@@ -3,8 +3,10 @@ package com.example.Post.Service;
 import com.example.Post.Dto.PostDto;
 import com.example.Post.Exception.ResourceNotFoundException;
 import com.example.Post.Model.Comment;
+import com.example.Post.Model.Like;
 import com.example.Post.Model.Post;
 import com.example.Post.Repository.CommentRepository;
+import com.example.Post.Repository.LikeRepository;
 import com.example.Post.Repository.PostRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class PostImplService implements PostService {
     PostRepository postRepository;
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    LikeRepository likeRepository;
 
     @Override
     public Post createPost(PostDto postDto) {
@@ -36,6 +40,7 @@ public class PostImplService implements PostService {
 
         for (Post post : postList) {
             List<Comment> comments = commentRepository.findAllByPostId(post.getId());
+            Like like = likeRepository.findAllByPostId(post.getId());
             PostDto postDto = new PostDto();
             postDto.setDescription(post.getDescription());
             postDto.setId(post.getId());

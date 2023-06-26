@@ -20,6 +20,8 @@ public class Post {
 
     private String description;
 
+    private  boolean liked = false;
+
 //    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
 //    private List<Comment> comments;
 

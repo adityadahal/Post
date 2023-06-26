@@ -6,5 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LikeRepository extends JpaRepository<Like, Integer> {
-    Like findAllByPostId(int id);
+        Like findAllByPostId(int id);
+
+        Like findByPostId(int postId);
+//    default findAllByPostId(int id);
+
+
 }

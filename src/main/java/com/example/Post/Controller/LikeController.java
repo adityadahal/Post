@@ -1,11 +1,10 @@
 package com.example.Post.Controller;
 
 import com.example.Post.Dto.LikeDto;
+import com.example.Post.Model.Like;
 import com.example.Post.Service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/like")
@@ -14,8 +13,14 @@ public class LikeController {
     LikeService likeService;
 
     @PostMapping("")
-    String createLike(LikeDto likeDto){
+   public String createLike(@RequestBody LikeDto likeDto){
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxDTOOOOOOOOOOOOOOOOOOOOOOOOOOO"+ likeDto);
         return likeService.createLike(likeDto);
 
+    }
+
+    @GetMapping("/postId/{id}")
+    public Like findByPostId(@PathVariable int id){
+        return  likeService.findLikeByPostId(id);
     }
 }

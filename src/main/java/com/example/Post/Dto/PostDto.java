@@ -11,6 +11,6 @@ public class PostDto {
     private int id;
     private String title;
     private String description;
+    private  boolean liked;
     private List<Comment> comments;
-    private Like like;
 }

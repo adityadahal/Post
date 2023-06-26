@@ -29,11 +29,13 @@ public class PostImplService implements PostService {
     public Post createPost(PostDto postDto) {
         Post post = new Post();
         post.setTitle(postDto.getTitle());
+        post.setLiked(postDto.isLiked());
         post.setDescription(postDto.getDescription());
         return postRepository.save(post);
     }
 
     @Override
+    @Transactional
     public List<PostDto> getAllPost() {
         List<Post> postList = postRepository.findAll();
         List<PostDto> postDtoList = new ArrayList<>();
@@ -46,7 +48,7 @@ public class PostImplService implements PostService {
             postDto.setId(post.getId());
             postDto.setTitle(post.getTitle());
             postDto.setComments(comments);
-            postDto.setLike(like);
+            postDto.setLiked(post.isLiked());
             postDtoList.add(postDto);
         }
         return postDtoList;
@@ -55,17 +57,27 @@ public class PostImplService implements PostService {
     @Override
     public Post updatePost(int id, PostDto postDto) {
         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found" + id));
-        post.setTitle(postDto.getTitle());
-        post.setDescription(postDto.getDescription());
+        if (postDto.getDescription() != null) {
+            post.setDescription(postDto.getDescription());
+        } else {
+            post.setDescription(post.getDescription());
+        }
+        if (postDto.getTitle() != null) {
+            post.setTitle(postDto.getTitle());
+        } else {
+            post.setTitle(post.getTitle());
+        }
+        post.setLiked(postDto.isLiked());
+
         return postRepository.save(post);
     }
 
     @Override
     @Transactional
-    public  String  deletePost(int id) {
+    public String deletePost(int id) {
         List<Comment> commentList = commentRepository.findAllByPostId(id);
-        for (Comment comment : commentList){
-           commentRepository.deleteById(comment.getId());
+        for (Comment comment : commentList) {
+            commentRepository.deleteById(comment.getId());
         }
         postRepository.deleteById(id);
         return "Successfully deleted " + id;

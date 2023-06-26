@@ -29,7 +29,7 @@ public class PostController {
         return postService.getAllPost();
     }
 
-    @PutMapping("/getByid/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updatePost(@PathVariable int id, @RequestBody PostDto postDto) {
         return ResponseEntity.ok(postService.updatePost(id, postDto));
     }
